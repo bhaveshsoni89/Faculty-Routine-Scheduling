@@ -1,0 +1,18 @@
+{% extends 'admin/change_form.html' %}
+
+
+
+{% block submit_buttons_bottom %}
+
+    {% block submit_row %}
+          <div class="submit-row">
+
+
+              <a href="{% url 'accept' %}"><input type="button" value="Accept"  style="background-color: #f4511e; float: left" name="_make-unique"></a>
+
+              <input type="button" value="Reject" style="background-color: #a41515; float: left" name="_make-unique">
+    </div>
+    {% endblock %}
+
+
+{% endblock %}

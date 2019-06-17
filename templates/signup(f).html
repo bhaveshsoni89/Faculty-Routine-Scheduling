@@ -1,0 +1,298 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Signup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" >
+  <script type="text/javascript">
+
+  // polyfill for RegExp.escape
+  if(!RegExp.escape) {
+    RegExp.escape = function(s) {
+      return String(s).replace(/[\\^$*+?.()|[\]{}]/g, '\\$&');
+    };
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+
+    // JavaScript form validation
+
+
+    var checkForm = function checkForm(signForm)
+    {
+
+      var name = document.getElementById('name').value;
+        if (document.getElementById('name').value == '')
+        {
+
+        }
+      if(this.email.value == "")
+      {
+        alert("Error: Email can not be blank!");
+        this.email.focus();
+        e.preventDefault(); // equivalent to return false
+        return;
+      }
+      var re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+      if(!re.test(this.email.value))
+      {
+        alert("Error: Email must be valid Email id !");
+        this.email.focus();
+        e.preventDefault();
+        return;
+      }
+
+
+
+
+      reg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+      if(this.password.value != "" && this.password.value == this.confirm.value)
+      {
+        if(!reg.test(this.password.value))
+        {
+          alert("The password you have entered is not valid!");
+          this.password.focus();
+          e.preventDefault();
+          return false;
+        }
+      }
+       else
+       {
+        alert("Error: Please check that you've entered and confirmed your password!");
+        this.password.focus();
+        e.preventDefault();
+        return false;
+      }
+
+
+
+
+    };
+
+    var signForm = document.getElementById("signForm");
+    signForm.addEventListener("submit", checkForm, true);
+
+    // HTML5 form validation
+
+    var supports_input_validity = function()
+    {
+      var i = document.createElement("input");
+      return "setCustomValidity" in i;
+    };
+
+    if(supports_input_validity()) {
+      var EmailInput = document.getElementById("email");
+      EmailInput.setCustomValidity(EmailInput.title);
+
+      var PasswordInput = document.getElementById("password");
+      PasswordInput.setCustomValidity(PasswordInput.title);
+
+      var ConfirmInput = document.getElementById("confirm");
+
+      // input key handlers
+
+      EmailInput.addEventListener("keyup", function(e) {
+        EmailInput.setCustomValidity(this.validity.patternMismatch ? EmailInput.title : "");
+      }, false);
+
+      PasswordInput.addEventListener("keyup", function(e) {
+        this.setCustomValidity(this.validity.patternMismatch ? PasswordInput.title : "");
+        if(this.checkValidity()) {
+          ConfirmInput.pattern = RegExp.escape(this.value);
+          ConfirmInput.setCustomValidity(ConfirmInput.title);
+        } else {
+          ConfirmInput.pattern = this.pattern;
+          ConfirmInput.setCustomValidity("");
+        }
+      }, false);
+
+      ConfirmInput.addEventListener("keyup", function(e) {
+        this.setCustomValidity(this.validity.patternMismatch ? ConfirmInput.title : "");
+      }, false);
+
+    }
+
+  }, false);
+
+
+  </script>
+    <style>
+             .btncolor {background-color: #f4511e; color: #f2f2f2;}
+              .hr1 { background-color: red; height: 1px; border: 0; width: 20%; }
+                .setform{width: 50%;
+                    margin-left: 300px;
+                    background-color: #F1F1F2;
+                    padding: 10px;
+                    border: 1px solid gray;
+                }
+              span{margin-right: 5px}
+    </style>
+
+</head>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'index' %}">Faculty Routine Scheduling</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+         <li><a href="{% url 'index' %}"><span class="glyphicon glyphicon-globe"></span>ABOUT</a></li>
+        <li><a href="{% url 'events' %}"><span class="glyphicon glyphicon-picture"></span>GALLERY</a></li>
+        <li><a href="{% url 'index' %}"><span class="glyphicon glyphicon-phone"></span>CONTACT</a></li>
+          <li><a href="{% url 'Login' %}"><span class="glyphicon glyphicon-log-in"></span>LOGIN</a></li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<br><br><br>
+<div class="container">
+    <div class="setform">
+    {% if messages %}
+          {% for message in messages %}
+            <div class="alert text-center alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}" role="alert">
+                {{ message }}
+            </div>
+          {% endfor %}
+      {% endif%}
+  <h1 class="text-center">Signup</h1><hr class="hr1">
+
+
+  <form method="post" name="signForm" id="signForm" enctype="multipart/form-data" onsubmit="return checkForm(this);">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label for="Name"><span class="glyphicon glyphicon-text-width"></span>Full Name:</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name" pattern="[a-zA-Z][a-zA-Z ]*"
+               title="Characters only"  required>
+      </div>
+      <div class="form-group">
+        <label for="Email"><span class="glyphicon glyphicon-envelope"></span>Email:</label>
+        <input type="Email" class="form-control" id="email" placeholder="Enter mail" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label><span class="glyphicon glyphicon-lock"></span>Password:</label>
+        <input type="password" class="form-control" placeholder="Enter Your Password" name="password" id="password"
+               title="Password must contain at least 6 characters, including UPPER/lowercase and numbers"
+               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
+      </div>
+
+      <div class="form-group">
+        <label for="pwd"><span class="glyphicon glyphicon-lock"></span>Confirm Password:</label>
+        <input type="password" class="form-control" id="confirm" placeholder="Conform Your password" name="confirm"
+             title="Password must be same as above" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
+      </div>
+
+      <label for="gender" style="margin-right: 10px"><span class="glyphicon glyphicon-user"></span>Gender :</label>
+      <label class="radio-inline"><input type="radio" name="gender" value="Male" checked>Male</label>
+      <label class="radio-inline"><input type="radio" name="gender" value="Female">Female</label>
+
+      <br>
+      <div class="form-group">
+        <label for="Name"><span class="glyphicon glyphicon-phone"></span>Contact No.:</label>
+        <input type="text" class="form-control" id="Name" placeholder="Enter Your Contact" maxlength="10" minlength="10"
+               name="contact" pattern="[6789][0-9]{9}" required>
+      </div>
+
+      <div class="form-group">
+          <label for="dob"><span class="glyphicon glyphicon-calendar"></span>Date of Birth :</label>
+          <input class="form-control" type="date" placeholder="dd-mm-yy" name="dob" id="dob" required>
+      </div>
+
+      <div class="form-group">
+        <label for="qualify"><span class="glyphicon glyphicon-education"></span>Qualification :</label>
+        <input type="text" class="form-control" id="qua" placeholder="Enter qualification" name="qualification"
+               pattern="\b(([\w]+[.][\w]+)([.][\w])*)" title="B.tech / M.tech" required>
+      </div>
+
+      <div class="form-group">
+        <label for="exp"><span class="glyphicon glyphicon-book"></span>Experience :</label>
+        <input type="number" class="form-control" id="exp" placeholder="Enter Experience (no. of years):" pattern="[0-9]+"
+               name="experience" required>
+      </div>
+      <label for="pwd"><span class="glyphicon glyphicon-tower"></span>Designation :</label><br>
+      <label class="radio-inline"><input type="radio" name="designation"  value="HOD" checked>Head of Department</label>
+      <label class="radio-inline"><input type="radio" name="designation" value="Associate Professor">Associate Professor</label>
+      <label class="radio-inline"><input type="radio" name="designation" value="Assistant Professor">Assistant Professor</label>
+
+      <br>
+      <br>
+     <div class="form-group">
+          <label ><span class="glyphicon glyphicon-picture"></span>Profile Picture :</label><br>
+          <input type="file"  class="form-control" name="profile" required>
+      </div>
+
+    <button type="submit" class="btn btncolor">Submit</button>
+  </form>
+    </div>
+</div>
+
+<BR>
+<footer class="container-fluid text-center">
+  <a href="#myPage" title="To Top">
+    <span class="glyphicon glyphicon-chevron-up"></span>
+  </a>
+  <p><span class="glyphicon glyphicon-copyright-mark"></span>All Rights Reserved 2019</p>
+     <a href="https://www.facebook.com/Poornima.College.Engineering" class="fa fa-facebook"></a>
+    <a href="https://twitter.com/poornimacollege" class="fa fa-twitter"></a>
+    <a href="https://www.linkedin.com/school/poornima-college-of-engineering-jaipur" class="fa fa-linkedin"></a>
+    <a href="https://www.instagram.com/poornimacollege/" class="fa fa-instagram"></a>
+    <a href="https://www.youtube.com/channel/UCby64Y0FA2nPE4XmdkUHkuA" class="fa fa-youtube"></a>
+</footer>
+
+<script>
+$(document).ready(function(){
+  // Add smooth scrolling to all links in navbar + footer link
+  $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+      // Prevent default anchor click behavior
+      event.preventDefault();
+
+      // Store hash
+      var hash = this.hash;
+
+      // Using jQuery's animate() method to add smooth page scroll
+      // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 900, function(){
+
+        // Add hash (#) to URL when done scrolling (default click behavior)
+        window.location.hash = hash;
+      });
+    } // End if
+  });
+
+  $(window).scroll(function() {
+    $(".slideanim").each(function(){
+      var pos = $(this).offset().top;
+
+      var winTop = $(window).scrollTop();
+        if (pos < winTop + 600) {
+          $(this).addClass("slide");
+        }
+    });
+  });
+})
+</script>
+
+</body>
+</html>

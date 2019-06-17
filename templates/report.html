@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+        <title>Report</title>
+        <style>
+            hr { background-color: red; height: 1px; border: 0; width: 50%; }
+
+            .btncolor {background-color: #f4511e; color: #f2f2f2;}
+            .setform{width: 50%;
+                    margin-left: 300px;
+                    background-color: #F1F1F2;
+                    padding: 10px;
+                    border: 1px solid gray;
+                }
+            span{margin-right: 5px}
+        </style>
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}
+            <nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'loggedIn' %}">Faculty Routine Scheduling</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="{% url 'daily' %}"><span class="glyphicon glyphicon-list-alt"></span>ACTIVITY</a></li>
+          <li><a href="{% url 'leave' %}"><span class="glyphicon glyphicon-new-window"></span>LEAVE</a></li>
+          <li><a href="{% url 'report' %}"><span class="glyphicon glyphicon-file"></span>REPORT</a></li>
+          <li><a href="{% url 'profile' %}"><span class="glyphicon glyphicon-user"></span>PROFILE</a></li>
+          <li><a href="{% url 'Login' %}?action=logout"><span class="glyphicon glyphicon-log-out"></span>LOGOUT</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+            <br><br><br>
+
+            <div class="container">
+            <div class="setform">
+            {% if messages %}
+               {% for message in messages %}
+            <div class="alert text-center alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}" role="alert">
+                {{ message }}
+            </div>
+          {% endfor %}
+          {% endif%}
+               <form method="post">
+                {% csrf_token %}
+                   <h1 style="text-align: center"> Generate Report</h1><hr/>
+                   <div class="form-group">
+                       <label for="name"><span class="glyphicon glyphicon-text-width"></span>Title :</label>
+                       <input class="form-control" id="name" name="Title" type="text">
+                   </div>
+                    <div class="form-group">
+                        <label><span class="glyphicon glyphicon-comment"></span>Content :</label>
+                        <textarea title=" Create Report" class="form-control" name="report" rows="10" ></textarea>
+                    </div>
+
+                   <button class="btn btncolor" type="submit">Send</button>
+                </form>
+            </div>
+            </div>
+            <br><br><br>
+
+        {% endblock %}
+    </body>
+</html>

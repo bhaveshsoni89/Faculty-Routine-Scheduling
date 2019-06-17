@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Please Wait</title>
+    <style>
+        p{
+            text-align: center;
+            font-weight: bold;
+        }
+        .glyphicon-thumbs-up{color:blue; font-size: 30px}
+    </style>
+{% endblock %}
+
+{% block body %}
+    <nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'index' %}">Faculty Routine Scheduling</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+
+      </ul>
+    </div>
+  </div>
+</nav><br><br><br><br>
+    <p style="font-size: 30px">Please wait until admin verifies you as a faculty </p>
+    <p style="font-size: 20px">Thanks for patience</p>
+    <p><span class="glyphicon glyphicon-thumbs-up"></span></p>
+    <br><br><br><br><br><br><br><br><br><br><br>
+{% endblock %}

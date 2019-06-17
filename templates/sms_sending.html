@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Send SMS</title>
+    <style>
+        .btncolor {background-color: #f4511e; color: #f2f2f2;}
+        .hr2 { background-color: red; height: 1px; border: 0; width: 16%; }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Administration</a>
+    </div>
+
+  </div>
+</nav>
+    <br><br>
+    <div class="container">
+        <h1 class="text-center">Send SMS</h1><hr class="hr2"/>
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert text-center alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}" role="alert">
+                {{ message }}
+            </div>
+          {% endfor %}
+      {% endif%}
+       <form method="post">
+        {% csrf_token %}
+
+            <label for=""><span class="glyphicon glyphicon-phone"></span> Send To :</label>
+            <div class="form-group">
+                <input type="text" class="form-control"  title="Receiver's Mobile no." name="sendto" placeholder="99xxxxxx99"><br/>
+                <label><span class="glyphicon glyphicon-envelope"></span> Message :</label>
+                <textarea title="Your message" class="form-control" name="message" placeholder="Your message in 140 words."
+                          rows="5" ></textarea><br/>
+                <button type="submit" class="btn btncolor" ><span class="glyphicon glyphicon-send"></span> Send</button>
+            </div>
+
+        </form>
+    </div>
+    <br><br><br>
+{% endblock %}

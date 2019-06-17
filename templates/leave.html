@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Leave Form </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" >
+    <style>
+        hr { background-color: red; height: 1px; border: 0; width: 55%; }
+        .btncolor {background-color: #f4511e; color: #f2f2f2;}
+        .setform{width: 50%;
+                    margin-left: 300px;
+                    background-color: #F1F1F2;
+                    padding: 10px;
+                    border: 1px solid gray;
+                }
+    </style>
+
+</head>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'loggedIn' %}">Faculty Routine Scheduling</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url 'daily' %}"><span class="glyphicon glyphicon-list-alt"></span>ACTIVITY</a></li>
+          <li><a href="{% url 'leave' %}"><span class="glyphicon glyphicon-new-window"></span>LEAVE</a></li>
+          <li><a href="{% url 'report' %}"><span class="glyphicon glyphicon-file"></span>REPORT</a></li>
+          <li><a href="{% url 'profile' %}"><span class="glyphicon glyphicon-user"></span>PROFILE</a></li>
+          <li><a href="{% url 'Login' %}?action=logout"><span class="glyphicon glyphicon-log-out"></span>LOGOUT</a></li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+<br>
+<br>
+<br><br>
+<div class="container">
+    <div class="setform">
+    {% if messages %}
+          {% for message in messages %}
+            <div class="alert text-center alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}" role="alert">
+                {{ message }}
+            </div>
+          {% endfor %}
+      {% endif%}
+    <h1 align="center">Leave Application</h1><hr/>
+    <form method="post">
+    {% csrf_token%}
+        <div class="form-group">
+            <textarea name="leave" title="Write your leave application" class="form-control" rows="10" placeholder="Write your application here">
+            </textarea>
+        </div>
+
+        <button class="btn btncolor" type="submit" ><span class="glyphicon glyphicon-send"></span> Send</button>
+
+    </form>
+    </div>
+</div>
+
+<br><br><br>
+<footer class="container-fluid text-center">
+  <a href="#myPage" title="To Top">
+    <span class="glyphicon glyphicon-chevron-up"></span>
+  </a>
+    <p><span class="glyphicon glyphicon-copyright-mark"></span>All Rights Reserved 2019</p>
+    <a href="https://www.facebook.com/Poornima.College.Engineering" class="fa fa-facebook"></a>
+    <a href="https://twitter.com/poornimacollege" class="fa fa-twitter"></a>
+    <a href="https://www.linkedin.com/school/poornima-college-of-engineering-jaipur" class="fa fa-linkedin"></a>
+    <a href="https://www.instagram.com/poornimacollege/" class="fa fa-instagram"></a>
+    <a href="https://www.youtube.com/channel/UCby64Y0FA2nPE4XmdkUHkuA" class="fa fa-youtube"></a>
+</footer>
+
+<script>
+$(document).ready(function(){
+  // Add smooth scrolling to all links in navbar + footer link
+  $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+      // Prevent default anchor click behavior
+      event.preventDefault();
+
+      // Store hash
+      var hash = this.hash;
+
+      // Using jQuery's animate() method to add smooth page scroll
+      // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 900, function(){
+
+        // Add hash (#) to URL when done scrolling (default click behavior)
+        window.location.hash = hash;
+      });
+    } // End if
+  });
+
+  $(window).scroll(function() {
+    $(".slideanim").each(function(){
+      var pos = $(this).offset().top;
+
+      var winTop = $(window).scrollTop();
+        if (pos < winTop + 600) {
+          $(this).addClass("slide");
+        }
+    });
+  });
+})
+</script>
+
+</body>
+</html>
+
+

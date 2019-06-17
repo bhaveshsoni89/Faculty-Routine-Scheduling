@@ -1,0 +1,20 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} |Admin{% endblock %}
+
+{% block extrastyle %}
+    <style>
+        #header { background-color: #FF4500;}
+        .module h2, .module caption, .inline-group h2 {background: #FF4500;}
+        #branding h1, #branding h1 a:link, #branding h1 a:visited{color: #f2f2f2;}
+
+    </style>
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Administration</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block content_title %}{% if title %}<h1>Faculty Routine Scheduling Admin Panel </h1>{% endif %}{% endblock %}
